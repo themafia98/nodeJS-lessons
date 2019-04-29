@@ -7,8 +7,8 @@ let fs = require('fs'); // for work with files
  // * __dirname -   dir to file
 
 // ASYNC
-
 // функция срабатывате когда файл будет полностью прочтен асинхронно или синхронно(sync)
+
 fs.readFile('text/text2.txt','utf8', function(error, data) {
 
     if (error) throw error;
