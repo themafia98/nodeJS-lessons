@@ -1,71 +1,20 @@
+let http = require('http'); // модуль для создания сервера
+let fs = require('fs');
 
+let server = http.createServer(function(req,res){ // req - Запрос, res - ответ
+    // настройка сервера
+    console.log('URL:' + req.url); // отслеживаем ссылку
+    res.writeHead(200, {'Content-Type': 'text/plan; charset=utf-8'}); // заголовок, 200 - успешно, text/plan - текст
+    let read = fs.createReadStream(__dirname + '/text/article.txt');
 
-let arr = require('./module');
-let events = require('events'); // include event module
-let util = require('util'); // модуль для наследования (классовых) эвентов
+    read.pipe(res); // ответ сервера
+    // res.end('Привет мир'); // ответ сервера
 
+}); // создания сервера
 
-// -----------------util / events---------
-let Cars = function(model){
+// указать по какому порту будет отслеживатся подключение сервера
+let port = 9001;
+let ip = 'localhost';
 
-    this.model = model;
-};
-
-util.inherits(Cars,events.EventEmitter); // устанавливает (наследования) обработчики событий
-
-let bmw = new Cars("BMW");
-let audi = new Cars("audi");
-let volvo = new Cars("volvo");
-
-let cars = [bmw,audi,volvo];
-
-cars.forEach(car => {
-
-    car.on('speed', function(text) {
-
-        console.log(car.model + " speed is - " + text);
-
-    });
-
-});
-
-bmw.emit('speed','254 km');
-
-// ----------------------------------- //
-
-
-// Events object
-
-let myEmit = new events.EventEmitter();
-
-myEmit.on('some_event', function(text){
-
-    console.log(text);
-});
-
-myEmit.on('click', function(text){
-
-    console.log(text);
-})
-
-myEmit.emit("some_event", "hello emit!"); // create event
-myEmit.emit("click", "hello click");
-
-// -----------module-------------- ///
-
-console.log(arr.multiply(5,8));
-console.log(arr.array(5));
-
-//-----------func--------------------//
-
-let test = function(callback){
-
-    console.log('test func');
-
-    callback();
-};
-function vvv() { console.log('test vvv'); }
-test(vvv);
-
-// -------------------------------------------- //
-
+server.listen(port, ip); // выход нажать контрл+С
+console.log('end');
