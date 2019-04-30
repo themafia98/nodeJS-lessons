@@ -1,2 +1,2 @@
 # nodeJS-lessons
-studing node js
+My node.JS tasks
