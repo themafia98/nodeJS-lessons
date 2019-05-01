@@ -1,12 +1,13 @@
 let express = require('express');
-
+let bodyParser = require('body-parser');
 
 let app = express(); // lib
 
 app.set('view engine','egs'); // for ejs
-
 app.use('/public', express.static('public')); // for static files (img,css...)
 
+
+let urlencodedParser = bodyParser.urlencoded({ extended: false }); // for parser
 let port = 9001;
 
 app.get('/', function(req, res){
@@ -19,7 +20,16 @@ app.get('/about/', function(req, res){
 
     //res.sendFile(__dirname + '/about.html');
 
-    res.render('about.ejs'); // ejs
+    res.render('login.ejs'); // ejs
+});
+
+app.post('/index',urlencodedParser, function(req, res){
+
+    if (!req.body) return res.sendStatus(400);
+    console.log(req.body);
+    //res.sendFile(__dirname + '/about.html');
+
+    res.render('login.ejs', {data: req.body}); // ejs
 });
 
 app.get('/about/:id', function(req, res){
